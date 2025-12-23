@@ -2,59 +2,105 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>欢迎界面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单动画界面</title>
     <style>
-        body {
+        /* 全局简单重置 */
+        * {
             margin: 0;
-            height: 100vh;
-            font-family: "Microsoft YaHei", Arial, sans-serif;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f5;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            padding: 50px 20px;
         }
 
-        .welcome-box {
-            background: #ffffff;
-            padding: 50px 70px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .welcome-box h1 {
-            margin-bottom: 20px;
+        /* 标题淡入动画 */
+        h1 {
             color: #333;
-            font-size: 36px;
+            margin-bottom: 50px;
+            /* 动画：名称 时长 缓动 填充模式 */
+            animation: fadeIn 2s ease forwards;
+            opacity: 0; /* 初始透明 */
         }
 
-        .welcome-box p {
-            margin-bottom: 30px;
-            color: #666;
-            font-size: 16px;
+        /* 动画方块 */
+        .animate-box {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #4285f4, #0f9d58);
+            border-radius: 10px;
+            /* 组合动画：旋转 + 缩放 */
+            animation: rotateScale 4s ease infinite alternate;
+            margin-bottom: 40px;
         }
 
-        .welcome-box button {
-            padding: 12px 30px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #4facfe;
+        /* 按钮样式 */
+        .btn {
+            padding: 10px 20px;
             border: none;
-            border-radius: 25px;
+            border-radius: 5px;
+            background: #4285f4;
+            color: white;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin: 0 10px;
+            transition: background 0.3s ease;
         }
 
-        .welcome-box button:hover {
-            background-color: #00c6ff;
+        .btn:hover {
+            background: #2d72d9;
+        }
+
+        /* 动画关键帧定义 */
+        /* 淡入 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 旋转+缩放 */
+        @keyframes rotateScale {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        /* 暂停动画的类 */
+        .pause {
+            animation-play-state: paused;
         }
     </style>
 </head>
 <body>
-    <div class="welcome-box">
-        <h1>THIS IS A TEST</h1>
-        <p>SOS！</p>
-        <button onclick="alert('欢迎你！')">COME ON</button>
+    <h1>简单动画演示</h1>
+
+    <!-- 动画方块 -->
+    <div class="animate-box" id="box"></div>
+
+    <!-- 控制按钮 -->
+    <div>
+        <button class="btn" onclick="pauseAnimation()">暂停动画</button>
+        <button class="btn" onclick="playAnimation()">继续动画</button>
     </div>
+
+    <script>
+        // 获取动画方块元素
+        const box = document.getElementById('box');
+        
+        // 暂停动画
+        function pauseAnimation() {
+            box.classList.add('pause');
+        }
+        
+        // 继续动画
+        function playAnimation() {
+            box.classList.remove('pause');
+        }
+    </script>
 </body>
 </html>
